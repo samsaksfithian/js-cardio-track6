@@ -8,7 +8,9 @@
  * @param {number} length
  * @returns {string[]} filtered array
  */
-function filterByLength(people, length) {}
+function filterByLength(people, length) {
+  return people.filter(person => person.length > length);
+}
 
 /**
  * Returns an array of every nth person.
@@ -23,7 +25,10 @@ function filterByLength(people, length) {}
  *    everyNPerson(['Matt', 'Kim', 'Kanye', 'Obama', 'Hans'], 2)
  *    // → ['Matt', 'Kanye', 'Hans']
  */
-function everyNPerson(people, n) {}
+function everyNPerson(people, n) {
+  if (n === 0) return people;
+  return people.filter((person, index) => index % n === 0);
+}
 
 /**
  * Returns an array where each entry is the person's intials
@@ -34,7 +39,12 @@ function everyNPerson(people, n) {}
  *    initials(['Kanye West', 'Barack Obama'])
  *    // → ['KW', 'BO']
  */
-function initials(people) {}
+function initials(people) {
+  return people.map(person => {
+    const names = person.split(' ');
+    return `${names[0][0]}${names[1][0]}`;
+  });
+}
 
 /**
  * Returns an array where every person is prepended with their position in the array
@@ -43,30 +53,48 @@ function initials(people) {}
  *
  * @example
  *    peopleWithPosition(['Kanye', 'Barack'])
- *    // → ['1. Kanye', '2. Barack']
+ *    // → ['0: Kanye', '1: Barack']
  */
-function peopleWithPosition(people) {}
+function peopleWithPosition(people) {
+  return people.map((person, index) => `${index}: ${person}`);
+}
 
 /**
  * Sorts `people` by first name
  * @param {string[]} people
  * @returns {string[]} sorted array
  */
-function sortByFirstName(people) {}
+function sortByFirstName(people) {
+  const copy = [...people];
+  return copy.sort((left, right) => {
+    const leftFirst = left.split(' ')[0];
+    const rightFirst = right.split(' ')[0];
+    return leftFirst < rightFirst ? -1 : 1;
+  });
+}
 
 /**
  * Sorts `people` by last name
  * @param {string[]} people
  * @returns {string[]} sorted array
  */
-function sortByLastName(people) {}
+function sortByLastName(people) {
+  const copy = [...people];
+  return copy.sort((left, right) => {
+    const leftLast = left.split(' ')[1];
+    const rightLast = right.split(' ')[1];
+    return leftLast < rightLast ? -1 : 1;
+  });
+}
 
 /**
  * Counts all the characters in the people array (including spaces)
  * @param {Array} people Array of names
  * @return Number of characters
  */
-function countTotalCharacters(people) {}
+function countTotalCharacters(people) {
+  return people.reduce((acc, person) => acc + person.length, 0);
+}
 
 /**
  * Returns `true` if everyone in `people` has `letter` in their name.
@@ -75,7 +103,10 @@ function countTotalCharacters(people) {}
  * @param {string} letter
  * @returns {boolean}
  */
-function everyoneHasLetter(people, letter) {}
+function everyoneHasLetter(people, letter) {
+  const pplWLetter = people.filter(person => person.includes(letter));
+  return pplWLetter.length === people.length;
+}
 
 /**
  * Returns `true` if at least one person has `letter` in their name.
@@ -84,7 +115,10 @@ function everyoneHasLetter(people, letter) {}
  * @param {string} letter
  * @returns {boolean}
  */
-function someoneHasLetter(people, letter) {}
+function someoneHasLetter(people, letter) {
+  const pplWLetter = people.filter(person => person.includes(letter));
+  return pplWLetter.length > 0;
+}
 
 module.exports = {
   filterByLength,
