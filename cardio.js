@@ -40,8 +40,10 @@ function everyNPerson(people, n) {
  */
 function initials(people) {
   return people.map(person => {
-    const names = person.split(' ');
-    return `${names[0][0]}${names[1][0]}`;
+    const [first, last] = person.split(' ');
+    return `${first[0]}${last[0]}`;
+    // using reduce for longer name initials
+    // return person.split(' ').reduce((acc, curr) => `${acc}${curr[0]}`, '');
   });
 }
 
