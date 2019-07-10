@@ -66,12 +66,12 @@ function peopleWithPosition(people) {
  * @returns {string[]} sorted array
  */
 function sortByFirstName(people) {
-  const copy = [...people];
-  return copy.sort((left, right) => {
-    const leftFirst = left.split(' ')[0];
-    const rightFirst = right.split(' ')[0];
-    return leftFirst < rightFirst ? -1 : 1;
-  });
+  return [...people].sort();
+  // return [...people].sort((left, right) => {
+  //   const leftFirst = left.split(' ')[0];
+  //   const rightFirst = right.split(' ')[0];
+  //   return leftFirst < rightFirst ? -1 : 1;
+  // });
 }
 
 /**
@@ -80,8 +80,7 @@ function sortByFirstName(people) {
  * @returns {string[]} sorted array
  */
 function sortByLastName(people) {
-  const copy = [...people];
-  return copy.sort((left, right) => {
+  return [...people].sort((left, right) => {
     const leftLast = left.split(' ')[1];
     const rightLast = right.split(' ')[1];
     return leftLast < rightLast ? -1 : 1;
@@ -105,8 +104,9 @@ function countTotalCharacters(people) {
  * @returns {boolean}
  */
 function everyoneHasLetter(people, letter) {
-  const pplWLetter = people.filter(person => person.includes(letter));
-  return pplWLetter.length === people.length;
+  // const pplWLetter = people.filter(person => person.includes(letter));
+  // return pplWLetter.length === people.length;
+  return people.every(person => person.includes(letter));
 }
 
 /**
@@ -117,8 +117,9 @@ function everyoneHasLetter(people, letter) {
  * @returns {boolean}
  */
 function someoneHasLetter(people, letter) {
-  const pplWLetter = people.filter(person => person.includes(letter));
-  return pplWLetter.length > 0;
+  // const pplWLetter = people.filter(person => person.includes(letter));
+  // return pplWLetter.length > 0;
+  return people.some(person => person.includes(letter));
 }
 
 module.exports = {
