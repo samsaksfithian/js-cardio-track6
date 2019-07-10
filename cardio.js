@@ -26,8 +26,7 @@ function filterByLength(people, length) {
  *    // → ['Matt', 'Kanye', 'Hans']
  */
 function everyNPerson(people, n) {
-  if (n === 0) return people;
-  return people.filter((person, index) => index % n === 0);
+  return people.filter((person, index) => index % n === 0 || n === 0);
 }
 
 /**
