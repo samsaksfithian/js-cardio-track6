@@ -39,6 +39,7 @@ class Card {
     this.value = TYPES[type];
   }
 
+  // TODO: javadoc comments
   printCard() {
     console.log(`[${this.type} of ${this.suit}s]`);
   }
@@ -59,6 +60,7 @@ class Deck {
     this.shuffle();
   }
 
+  // TODO: javadoc comments
   shuffle() {
     const shuffledCards = [];
     while (this.cards.length > 0) {
@@ -68,11 +70,10 @@ class Deck {
     this.cards = shuffledCards;
   }
 
+  // TODO: javadoc comments
   dealCard(holder) {
     if (this.cards.length > 0) {
-      const theCard = this.cards.shift();
-      // console.log(theCard);
-      holder.hand.push(theCard);
+      holder.takeCard(this.cards.shift());
     } else {
       console.error('Empty deck :(');
     }
@@ -91,41 +92,57 @@ class Holder {
     this.beatDealer = false;
   }
 
+  // TODO: javadoc comments
   score() {
     return this.hand.reduce((count, card) => count + card.value, 0);
   }
 
-  printInfo(dealerName = '') {
+  // TODO: javadoc comments
+  printInfo(dealerName = '??') {
     console.log(`===== ${this.name} =====`);
     this.hand.forEach(card => card.printCard());
     console.log(`Total score = ${this.score()}`);
-    // eslint-disable-next-line no-nested-ternary
-    const firstHalf = this.isDealer ? 'Is the' : this.beatDealer ? 'Beat' : 'Lost to';
-    const dealerParens = dealerName === '' ? '' : ` (${dealerName})`;
-    console.log(`${firstHalf} dealer${dealerParens}\n`);
+    if (this.score() > 21) {
+      console.log('Busted! 💣💥');
+    }
+    const vsDealer = this.beatDealer ? 'Beat' : 'Lost to';
+    let outputStr = `${vsDealer} the dealer (${dealerName})`;
+    if (this.isDealer) {
+      outputStr = '⭐⭐   -Is the dealer- ⭐⭐';
+    }
+    console.log(outputStr, '\n');
+    // legacy nested ternary for posterity
+    // const firstHalf = this.isDealer ? 'Is the' : this.beatDealer ? 'Beat' : 'Lost to';
   }
 
+  // TODO: javadoc comments
+  takeCard(card) {
+    this.hand.push(card);
+  }
+
+  // TODO: javadoc comments
   wantCard(dealer) {
     if (this.score() > 21) {
       this.checkForAce();
     }
-    const myScor = this.score();
+    const myScore = this.score();
     const dealCard = dealer.hand[0].value;
-    if (this.isDealer && myScor < 16) {
+    if (this.isDealer && myScore < 16) {
       return true;
     }
-    if (myScor <= 11) {
+    if (myScore <= 11) {
       return true;
     }
-    if (myScor >= 17) {
+    if (myScore >= 17) {
       return false;
     }
-    if (myScor < 17 && dealCard <= 6) {
+    if (myScore < 17 && dealCard <= 6) {
       return false;
     }
     return true;
   }
 
+  // TODO: javadoc comments
   checkForAce() {
     this.hand.forEach(card => {
       if (card.type === 'ACE') {
@@ -145,10 +162,12 @@ class Table {
     this.genHolders(inputHolders);
   }
 
+  // TODO: javadoc comments
   genHolders(inputHolders) {
     this.holders = [];
     // Handles list of names
     if (inputHolders.length) {
+      // TODO: probably could/should use typeof instead
       inputHolders.forEach(name => {
         this.holders.push(new Holder(name));
       });
@@ -163,6 +182,7 @@ class Table {
     this.holders[dealerNum].isDealer = true;
   }
 
+  // TODO: javadoc comments
   runGame() {
     this.sortHolders();
     this.holders.reverse();
@@ -180,6 +200,7 @@ class Table {
     this.setWinners();
   }
 
+  // TODO: javadoc comments
   findDealer() {
     for (let index = 0; index < this.holders.length; index++) {
       if (this.holders[index].isDealer) {
@@ -189,6 +210,7 @@ class Table {
     return new Holder('No Dealer', true);
   }
 
+  // TODO: javadoc comments
   setWinners() {
     const dealerScore = this.findDealer().score();
     this.holders.forEach(holder => {
@@ -202,7 +224,8 @@ class Table {
     });
   }
 
-  print() {
+  // TODO: javadoc comments
+  printGame() {
     const line = '=====================';
     const intro = 'Welcome to Blackjack!';
     console.log(`\n${line}\n${intro}\n${line}\n`);
@@ -212,6 +235,7 @@ class Table {
     });
   }
 
+  // TODO: javadoc comments
   sortHolders() {
     this.holders.sort((left, right) => {
       if (left.isDealer) {
@@ -231,6 +255,6 @@ class Table {
 
 console.clear();
 // const table = new Table(['Scott', 'Sam', 'Brennan', 'Jon', 'Ayana', 'Andrew']);
-const table = new Table(5);
+const table = new Table(2);
 table.runGame();
-table.print();
+table.printGame();
